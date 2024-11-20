@@ -1,5 +1,5 @@
 # if want to start
-docker start env_setup_david-ros2-1
+docker start ros1-ros1-1
 
 # If already running
-docker exec -e "DISPLAY=host.docker.internal:0.0" -it env_setup_david-ros2-1 bash
+docker exec -e "DISPLAY=host.docker.internal:0.0" -it ros1-ros1-1 bash

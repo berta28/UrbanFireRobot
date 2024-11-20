@@ -10,6 +10,7 @@ catkin_package()
 
 catkin_install_python(PROGRAMS
   scripts/warehouse_generator.py
+  scripts/object_detector.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
