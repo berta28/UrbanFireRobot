@@ -13,15 +13,13 @@
   <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
     <arg name="ign_args" value="-r -v 3 $(arg world)"/>
   </include>
-
 <!-- Spawn the Jackal model -->
-  <include file="$(find jackal_gazebo)/launch/spawn_jackal.launch">
+  <include file="$(find jackal-fre)/launch/spawn_jackal.launch">
     <arg name="x" value="$(arg x)"/>
     <arg name="y" value="$(arg y)"/>
     <arg name="z" value="$(arg z)"/>
     <arg name="yaw" value="$(arg yaw)"/>
   </include>
-  
   <!-- Example additional node: Warehouse generator script -->
   <node name="warehouse_generator" pkg="warehouse_simulation" type="warehouse_generator.py" output="screen" />
 
