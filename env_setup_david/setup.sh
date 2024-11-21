@@ -23,6 +23,11 @@ sudo apt install ros-humble-turtlebot3* -y
 echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
+# For YOLO
+sudo apt install python3-pip
+pip3 install ultralytics
+pip3 install numpy==1.26.4
+
 # Create a workspace
 # mkdir -p ~/ros2_ws/src
 # cd ~/ros2_ws

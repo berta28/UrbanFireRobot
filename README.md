@@ -60,6 +60,16 @@ To start gazebo and the simulation run the command `ros2 launch warehouse_simula
 
 Adding people to the world can be done by `ros2 launch warehouse_simulation warehouse_generator.py`
 
+## Object detection exmaple
+
+based on: https://www.youtube.com/watch?v=XqibXP4lwgA
+
+ros2 launch yolobot_gazebo yolobot_launch.py
+
+rviz2
+
+ros2 run yolobot_recognition yolov8_ros2_subscriber.py
+
 ## Contributing
 
 Please follow the standard GitHub flow for contributing:
