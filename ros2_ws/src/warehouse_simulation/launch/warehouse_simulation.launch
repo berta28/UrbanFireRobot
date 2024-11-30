@@ -38,4 +38,23 @@
     args="/thermal_camera/image@sensor_msgs/Image@ignition.msgs.Image">
   </node>
 
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge_rgb_camera)"
+    output="screen"
+    args="/rgb_camera/image@sensor_msgs/Image@ignition.msgs.Image">
+  </node>
+
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge_lidar)"
+    output="screen"
+    args="/lidar@sensor_msgs/LaserScan@ignition.msgs.LaserScan /lidar/points@sensor_msgs/PointCloud2@ignition.msgs.PointCloudPacked">
+  </node>
+
+  <!-- start rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find warehouse_simulation)/rviz/warehouse_simulation.rviz" required="true" output="screen">
+  </node>
 </launch>
