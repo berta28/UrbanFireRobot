@@ -28,3 +28,8 @@ install(
   DIRECTORY worlds/
   DESTINATION share/${PROJECT_NAME}/worlds
 )
+
+install(
+  DIRECTORY rviz/
+  DESTINATION share/${PROJECT_NAME}/rviz
+)
