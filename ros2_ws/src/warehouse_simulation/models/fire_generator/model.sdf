@@ -22,12 +22,32 @@
             </metal>
           </pbr>
         </material>
-        <color_range_image>materials/textures/firecolors.png</color_range_image>
+        <color_range_image>materials/textures/firecolors.png</color_range_image>       
       </particle_emitter>
     </link>
-        <plugin
+    <link name="thermal_link">
+    <visual name="fire_visual">
+      <geometry>
+        <box>
+          <size>1 1 2 </size>
+        </box>
+      </geometry>
+      <material>
+        <ambient>1 0 0 1</ambient>
+        <diffuse>1 0 0 1</diffuse>
+        <specular>1 0 0 1</specular>
+      </material>
+      <plugin filename="ignition-gazebo-thermal-system" name="ignition::gazebo::systems::Thermal">
+          <heat_signature>materials/textures/fire_thermal.png</heat_signature>
+          <max_temp>1200</max_temp>
+          <!-- <min_temp>800</min_temp> -->
+        </plugin>
+    </visual>
+  </link>
+    <plugin
       filename="libignition-gazebo-particle-emitter-system.so"
       name="ignition::gazebo::systems::ParticleEmitter">
     </plugin>
+
   </model>
 </sdf>

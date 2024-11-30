@@ -1,0 +1,37 @@
+<launch>
+  <arg name="world" default="$(find warehouse_simulation)/worlds/sensor_testing.sdf" />
+  <arg name="ign_args" default=""/>
+
+  <!-- Launch Ignition Gazebo with the specified world -->
+  <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
+    <arg name="ign_args" value="-r -v 3 $(arg world)"/>
+  </include>
+
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge_thermal_camera)"
+    output="screen"
+    args="/thermal_camera/image@sensor_msgs/Image@ignition.msgs.Image">
+  </node>
+
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge_rgb_camera)"
+    output="screen"
+    args="/rgb_camera/image@sensor_msgs/Image@ignition.msgs.Image">
+  </node>
+
+  <node
+    pkg="ros_ign_bridge"
+    type="parameter_bridge"
+    name="$(anon ros_ign_bridge_lidar)"
+    output="screen"
+    args="/lidar@sensor_msgs/LaserScan@ignition.msgs.LaserScan /lidar/points@sensor_msgs/PointCloud2@ignition.msgs.PointCloudPacked">
+  </node>
+
+  <!-- Start RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find warehouse_simulation)/rviz/warehouse_simulation.rviz" required="true" output="screen">
+  </node>
+</launch>
