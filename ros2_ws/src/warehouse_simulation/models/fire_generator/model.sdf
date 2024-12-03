@@ -6,8 +6,8 @@
     <link name="fire_link">
       <particle_emitter name="emitter" type="box">
         <emitting>true</emitting>
-        <size>0.5 0.5 0.5</size>
-        <particle_size>0.1 0.1 0.1</particle_size>
+        <size>1 1 1 </size>
+        <particle_size>0.3 0.3 0.3</particle_size>
         <lifetime>5</lifetime>
         <min_velocity>0.1</min_velocity>
         <max_velocity>0.2</max_velocity>
@@ -29,7 +29,7 @@
     <visual name="fire_visual">
       <geometry>
         <box>
-          <size>1 1 2 </size>
+          <size>1 1 1 </size>
         </box>
       </geometry>
       <material>

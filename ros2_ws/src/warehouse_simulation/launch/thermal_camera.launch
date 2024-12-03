@@ -7,7 +7,7 @@
     <arg name="ign_args" value="-r -v 3 $(arg world)"/>
   </include>
 
-  <node
+  <!-- <node
     pkg="ros_ign_bridge"
     type="parameter_bridge"
     name="$(anon ros_ign_bridge_thermal_camera)"
@@ -29,9 +29,9 @@
     name="$(anon ros_ign_bridge_lidar)"
     output="screen"
     args="/lidar@sensor_msgs/LaserScan@ignition.msgs.LaserScan /lidar/points@sensor_msgs/PointCloud2@ignition.msgs.PointCloudPacked">
-  </node>
+  </node> -->
 
   <!-- Start RViz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find warehouse_simulation)/rviz/warehouse_simulation.rviz" required="true" output="screen">
-  </node>
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find warehouse_simulation)/rviz/warehouse_simulation.rviz" required="true" output="screen">
+  </node> -->
 </launch>

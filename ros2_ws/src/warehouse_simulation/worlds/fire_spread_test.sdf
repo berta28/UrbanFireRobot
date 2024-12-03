@@ -1,0 +1,66 @@
+<sdf version='1.8'>
+  <world name='lidar_sensor'>
+    <physics name='1ms' type='ignored'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <plugin name='ignition::gazebo::systems::Physics' filename='ignition-gazebo-physics-system'/>
+    <plugin name='ignition::gazebo::systems::Sensors' filename='ignition-gazebo-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin name='ignition::gazebo::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
+    <plugin name='ignition::gazebo::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
+
+      <model name="fire_generator">
+    <pose>0 0 0 0 -1.5707 0</pose>
+    <static>true</static>
+    <link name="fire_link">
+      <particle_emitter name="emitter" type="box">
+        <emitting>true</emitting>
+        <size>0.5 0.5 0.5</size>
+        <particle_size>0.1 0.1 0.1</particle_size>
+        <lifetime>5</lifetime>
+        <min_velocity>0.1</min_velocity>
+        <max_velocity>0.2</max_velocity>
+        <scale_rate>0.5</scale_rate>
+        <rate>50</rate>
+        <material>
+          <diffuse>0.7 0.7 0.7</diffuse>
+          <specular>1.0 1.0 1.0</specular>
+          <pbr>
+            <metal>
+              <albedo_map>materials/textures/fire.png</albedo_map>
+            </metal>
+          </pbr>
+        </material>
+        <color_range_image>materials/textures/firecolors.png</color_range_image>       
+      </particle_emitter>
+    </link>
+    <link name="thermal_link">
+    <visual name="fire_visual">
+      <geometry>
+        <box>
+          <size>1 1 2 </size>
+        </box>
+      </geometry>
+      <material>
+        <ambient>1 0 0 1</ambient>
+        <diffuse>1 0 0 1</diffuse>
+        <specular>1 0 0 1</specular>
+      </material>
+      <plugin filename="ignition-gazebo-thermal-system" name="ignition::gazebo::systems::Thermal">
+          <heat_signature>materials/textures/fire_thermal.png</heat_signature>
+          <max_temp>1200</max_temp>
+          <!-- <min_temp>800</min_temp> -->
+        </plugin>
+    </visual>
+  </link>
+    <plugin
+      filename="libignition-gazebo-particle-emitter-system.so"
+      name="ignition::gazebo::systems::ParticleEmitter">
+    </plugin>
+
+  </model>
+  </world>
+</sdf>

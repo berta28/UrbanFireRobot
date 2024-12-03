@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version='1.7'>
-  <world name='default'>
+  <world name='simple_warehouse'>
    <plugin
       filename="libignition-gazebo-physics-system.so"
       name="ignition::gazebo::systems::Physics">
@@ -25,9 +25,60 @@
       name="ignition::gazebo::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
+    <plugin filename="WorldControl" name="World control">
+    <ignition-gui>
+        <title>World control</title>
+        <property type="bool" key="showTitleBar">false</property>
+        <property type="bool" key="resizable">false</property>
+        <property type="double" key="height">72</property>
+        <property type="double" key="width">121</property>
+        <property type="double" key="z">1</property>
 
+        <property type="string" key="state">floating</property>
+        <anchors target="3D View">
+        <line own="left" target="left"/>
+        <line own="bottom" target="bottom"/>
+        </anchors>
+    </ignition-gui>
+
+    <play_pause>true</play_pause>
+    <step>true</step>
+    <start_paused>true</start_paused>
+    <service>/world/world_demo/control</service>
+    <stats_topic>/world/world_demo/stats</stats_topic>
+</plugin>
+<!-- 3D scene -->
+<plugin filename="GzScene3D" name="3D View">
+    <ignition-gui>
+        <title>3D View</title>
+        <property type="bool" key="showTitleBar">false</property>
+        <property type="string" key="state">docked</property>
+    </ignition-gui>
+
+    <engine>ogre2</engine>
+    <scene>scene</scene>
+    <ambient_light>1.0 1.0 1.0</ambient_light>
+    <background_color>0.8 0.8 0.8</background_color>
+    <camera_pose>-6 0 6 0 0.5 0</camera_pose>
+</plugin>
+        <gui>
+
+      <plugin filename="ImageDisplay" name="Image Display 5">
+        <ignition-gui>
+          <title>Thermal camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">500</property>
+          <property type="double" key="y">640</property>
+        </ignition-gui>
+        <topic>thermal_camera/image</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+
+    </gui>
 <atmosphere type="adiabatic">
-  <temperature>300</temperature>
+  <temperature>280</temperature>
   <!--
     This is a more exaggerated temperature gradient, which produces a
     temperature range of ~11.5 kelvin for objects in the thermal camera
@@ -78,31 +129,47 @@
       </link>
     </model>
 
-    <!-- Fire  -->
-     <include>
-      <uri>model://fog_generator</uri>
-    </include>
-
-    <include>
-      <uri>model://fire_generator</uri>
-    </include>
-<!-- robot -->
-        <include>
-      <uri>model://my_robot</uri>
-      <pose>32 0 1 0 0 0</pose>
-    </include>
-<!-- victims -->
-    <include>
-      <pose>20 0 0 0 0 1.570796</pose>
+ <include>
+      <pose>32 0 0 0 0 1.570796</pose>
       <name>victim_1</name>
       <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Rescue Randy</uri>
     </include>
 
 
     <include>
-      <pose>-30 0 0 0 0 1.570796</pose>
+      <pose>-1 0 0 0 0 0</pose>
       <name>victim_2</name>
       <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Rescue Randy</uri>
+    </include>
+
+    <include>
+      <uri>model://fog_generator</uri>
+      <pose>0 0 0 0 0 0</pose>
+      <name>smoke_1</name>
+    </include>
+
+    <include>
+      <uri>model://fire_generator</uri>
+      <pose>0 0 1 0 0 0</pose>
+      <name>fire_1</name>
+    </include>
+
+    <include>
+      <uri>model://fog_generator</uri>
+      <pose> 29 20 0 0 0</pose>
+      <name>smoke_2</name>
+    </include>
+
+    <include>
+      <uri>model://fire_generator</uri>
+      <pose>29 20 1 0 0 0</pose>
+      <name>fire_2</name>
+    </include>
+
+
+    <include>
+      <uri>model://sensors</uri>
+      <pose>-5 0 1 0 0 0</pose>
     </include>
 
     <!-- simulation -->
@@ -4634,12 +4701,66 @@
         <pose>0 0 10 0 -0 0</pose>
       </light>
     </state>
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>37.5348 8.73647 42.7457 0 0.817796 -2.64318</pose>
-        <view_controller>orbit</view_controller>
-        <projection_type>perspective</projection_type>
-      </camera>
-    </gui>
+
+    <!-- <gui fullscreen="0">
+
+      <plugin filename="ImageDisplay" name="Image Display">
+        <ignition-gui>
+          <title>RGB camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+        </ignition-gui>
+        <topic>camera</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+      <plugin filename="ImageDisplay" name="Image Display 2">
+        <ignition-gui>
+          <title>Depth camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">500</property>
+        </ignition-gui>
+        <topic>depth_camera</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+      <plugin filename="ImageDisplay" name="Image Display 3">
+        <ignition-gui>
+          <title>RGBD: image</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="y">320</property>
+        </ignition-gui>
+        <topic>rgbd_camera/image</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+      <plugin filename="ImageDisplay" name="Image Display 3">
+        <ignition-gui>
+          <title>RGBD: depth</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">500</property>
+          <property type="double" key="y">320</property>
+        </ignition-gui>
+        <topic>rgbd_camera/depth_image</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+      <plugin filename="ImageDisplay" name="Image Display 5">
+        <ignition-gui>
+          <title>Thermal camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">500</property>
+          <property type="double" key="y">640</property>
+        </ignition-gui>
+        <topic>thermal_camera</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+
+    </gui> -->
   </world>
 </sdf>

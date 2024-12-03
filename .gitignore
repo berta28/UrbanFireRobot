@@ -7,3 +7,5 @@
 ros2_ws/src/CMakeLists.txt
 */devel/*
 */.catkin_tools/*
+images/*
+thermal_images/*

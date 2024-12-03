@@ -21,7 +21,7 @@
 -->
 
 <sdf version="1.6">
-  <world name="particle_emitters">
+  <world name="simple_warehouse">
 
     <physics name="1ms" type="ode">
       <max_step_size>0.001</max_step_size>
@@ -48,7 +48,45 @@
       filename="libignition-gazebo-scene-broadcaster-system.so"
       name="ignition::gazebo::systems::SceneBroadcaster">
     </plugin>
+    <!-- World control -->
+<plugin filename="WorldControl" name="World control">
+    <ignition-gui>
+        <title>World control</title>
+        <property type="bool" key="showTitleBar">false</property>
+        <property type="bool" key="resizable">false</property>
+        <property type="double" key="height">72</property>
+        <property type="double" key="width">121</property>
+        <property type="double" key="z">1</property>
+
+        <property type="string" key="state">floating</property>
+        <anchors target="3D View">
+        <line own="left" target="left"/>
+        <line own="bottom" target="bottom"/>
+        </anchors>
+    </ignition-gui>
+
+    <play_pause>true</play_pause>
+    <step>true</step>
+    <start_paused>true</start_paused>
+    <service>/world/world_demo/control</service>
+    <stats_topic>/world/world_demo/stats</stats_topic>
+</plugin>
+<!-- 3D scene -->
+<plugin filename="GzScene3D" name="3D View">
+    <ignition-gui>
+        <title>3D View</title>
+        <property type="bool" key="showTitleBar">false</property>
+        <property type="string" key="state">docked</property>
+    </ignition-gui>
+
+    <engine>ogre2</engine>
+    <scene>scene</scene>
+    <ambient_light>1.0 1.0 1.0</ambient_light>
+    <background_color>0.8 0.8 0.8</background_color>
+    <camera_pose>-6 0 6 0 0.5 0</camera_pose>
+</plugin>
     <atmosphere type="adiabatic">
+    
   <temperature>300</temperature>
   <!--
     This is a more exaggerated temperature gradient, which produces a
@@ -109,7 +147,7 @@
 
 
     <include>
-      <pose>-30 0 0 0 0 1.570796</pose>
+      <pose>-1 0 0 0 0 0</pose>
       <name>victim_2</name>
       <uri>https://fuel.ignitionrobotics.org/1.0/OpenRobotics/models/Rescue Randy</uri>
     </include>
@@ -121,12 +159,12 @@
 
     <include>
       <uri>model://fire_generator</uri>
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 0 1 0 0 0</pose>
     </include>
 
     <include>
-      <uri>model://my_robot</uri>
-      <pose>32 0 1 0 0 0</pose>
+      <uri>model://sensors</uri>
+      <pose>-5 0 1 0 0 0</pose>
     </include>
     
     <model name='wall_1'>
@@ -229,5 +267,33 @@
       </link>
       <pose>35 15 2.5 0 0 0</pose>
     </model>
+        <gui fullscreen="0">
+
+      <plugin filename="ImageDisplay" name="Image Display 5">
+        <ignition-gui>
+          <title>Thermal camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">500</property>
+          <property type="double" key="y">640</property>
+        </ignition-gui>
+        <topic>thermal_camera/image</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+      <plugin filename="ImageDisplay" name="Image Display 1">
+        <ignition-gui>
+          <title>RGB camera</title>
+          <property key="state" type="string">floating</property>
+          <property type="double" key="width">350</property>
+          <property type="double" key="height">315</property>
+          <property type="double" key="x">200</property>
+          <property type="double" key="y">640</property>
+        </ignition-gui>
+        <topic>camera/image</topic>
+        <topic_picker>false</topic_picker>
+      </plugin>
+
+    </gui>
   </world>
 </sdf>

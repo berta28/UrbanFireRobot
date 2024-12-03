@@ -9,7 +9,7 @@
   <arg name="world" default="$(find warehouse_simulation)/worlds/warehouse_full.sdf" />
   <arg name="ign_args" default=""/>
 
-  <!-- Launch Ignition Gazebo with the specified world -->
+  <!-- Launch Ignition Gazebo with the specified world in headless mode -->
   <include file="$(find ros_ign_gazebo)/launch/ign_gazebo.launch">
     <arg name="ign_args" value="-r -v 3 $(arg world)"/>
   </include>
@@ -17,17 +17,9 @@
   <node
     pkg="ros_ign_bridge"
     type="parameter_bridge"
-    name="$(anon ros_ign_bridge)"
+    name="$(anon ros_ign_bridge_camera)"
     output="screen"
-    args="/lidar@sensor_msgs/LaserScan@ignition.msgs.LaserScan /lidar/points@sensor_msgs/PointCloud2@ignition.msgs.PointCloudPacked">
-  </node>
-
-  <node
-    pkg="ros_ign_bridge"
-    type="parameter_bridge"
-    name="$(anon ros_ign_bridge_imu)"
-    output="screen"
-    args="/imu@sensor_msgs/Imu@ignition.msgs.IMU">
+    args="/camera/image@sensor_msgs/Image@ignition.msgs.Image">
   </node>
 
   <node
@@ -38,23 +30,12 @@
     args="/thermal_camera/image@sensor_msgs/Image@ignition.msgs.Image">
   </node>
 
+  <!-- Add the thermal_image_listener node
   <node
-    pkg="ros_ign_bridge"
-    type="parameter_bridge"
-    name="$(anon ros_ign_bridge_rgb_camera)"
-    output="screen"
-    args="/rgb_camera/image@sensor_msgs/Image@ignition.msgs.Image">
-  </node>
+    pkg="warehouse_simulation"
+    type="thermal_image_listener.py"
+    name="thermal_image_listener"
+    output="screen">
+  </node> -->
 
-  <node
-    pkg="ros_ign_bridge"
-    type="parameter_bridge"
-    name="$(anon ros_ign_bridge_lidar)"
-    output="screen"
-    args="/lidar@sensor_msgs/LaserScan@ignition.msgs.LaserScan /lidar/points@sensor_msgs/PointCloud2@ignition.msgs.PointCloudPacked">
-  </node>
-
-  <!-- start rviz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find warehouse_simulation)/rviz/warehouse_simulation.rviz" required="true" output="screen">
-  </node>
 </launch>
